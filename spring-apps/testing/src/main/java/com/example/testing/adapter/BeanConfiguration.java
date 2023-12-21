@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Primary;
 
 import com.example.testing.adapter.database.DBTestCaseRepo;
 import com.example.testing.adapter.database.JDBCTestCaseEntityRepo;
+import com.example.testing.adapter.messaging.EventListener;
 import com.example.testing.application.ITestCaseRepo;
 import com.example.testing.application.ITestCaseService;
 import com.example.testing.application.TestCaseService;
@@ -24,4 +25,8 @@ public class BeanConfiguration {
 		 return new DBTestCaseRepo(jdbcTestCaseEntityRepo);
 	 }
 	 
+	 @Bean
+	 EventListener eventListener(ITestCaseService testCaseService) {
+			return new EventListener(testCaseService);
+	 }
 }
