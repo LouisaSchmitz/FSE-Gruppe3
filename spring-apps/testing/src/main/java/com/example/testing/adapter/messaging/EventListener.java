@@ -28,15 +28,15 @@ public class EventListener {
 	
 	@RabbitListener(queues = QUEUE_NAME)
 	public void listen(String message) {
-		System.out.println("DEBUGINFO Nachricht: " + message);
+		//System.out.println("DEBUGINFO Nachricht: " + message);
 		 
 		String parts[] = message.split(Pattern.quote("/"));
 		 
 		String event = parts[0];
 		String payload = parts[1];
 		 
-		System.out.println(event);
-		System.out.println(payload);
+		System.out.println("EVENT: " + event);
+		System.out.println("PAYLOAD: " + payload);
 		 
 //		try {
 //			Thread.sleep(10000);
