@@ -20,7 +20,7 @@ public class UserStoryController {
 	}
 	
 	/*
-	 * curl -X GET http://localhost:8080/testManager/showAllUserStorys
+	 * curl -X GET http://localhost:8070/testManager/showAllUserStorys
 	 */		
 	@GetMapping("/showAllUserStorys")
 	public String showAllUserStorys() {
@@ -28,7 +28,7 @@ public class UserStoryController {
 	}
 	
 	/*
-	 * curl -X GET http://localhost:8080/testManager/userStoryStatus/1
+	 * curl -X GET http://localhost:8070/testManager/userStoryStatus/1
 	 */		
 	@GetMapping("/userStoryStatus/{id}")
 	public String showStatusUserStory (@PathVariable ("id") int id) {
@@ -36,7 +36,7 @@ public class UserStoryController {
 	}
 	
 	/*
-	 * curl -X GET http://localhost:8080/testManager/changeUserStoryStatusToReady/1
+	 * curl -X GET http://localhost:8070/testManager/changeUserStoryStatusToReady/1
 	 */	
 	@GetMapping("/changeUserStoryStatusToReady/{id}")
 	public boolean changeStatusUserStory (@PathVariable ("id") int id) {
