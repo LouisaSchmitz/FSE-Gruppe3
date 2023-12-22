@@ -6,6 +6,10 @@ public class TestCaseTO {
 	String testStatus;
 	String testDescription;
 	
+	public TestCaseTO() {
+		
+	}
+	
 	public TestCaseTO(int id, String testStatus, String testDescription) {
 		this.id = id;
 		this.testStatus = testStatus;
