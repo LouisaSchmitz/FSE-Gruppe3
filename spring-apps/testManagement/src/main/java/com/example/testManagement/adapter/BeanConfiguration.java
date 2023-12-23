@@ -1,7 +1,7 @@
 package com.example.testManagement.adapter;
 
 import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -49,7 +49,7 @@ public class BeanConfiguration {
 	 }
 	 
 	 @Bean
-	 public Queue myQueue() {
-		 return new Queue(QueueAdapter.QUEUE_NAME, QueueAdapter.NON_DURABLE);    
+	 public TopicExchange topic() {
+        return new TopicExchange("change.status");
 	 }
 }

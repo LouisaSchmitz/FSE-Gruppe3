@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.TopicExchange;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import com.example.testManagement.domain.model.TestCase;
 import com.example.testManagement.domain.model.TestCaseTO;
@@ -14,10 +16,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class QueueAdapter implements IMessageQueue{
 
-    public static final boolean NON_DURABLE = false;
-    public static final String QUEUE_NAME = "changeStatus";
+    public final String key = "status.change.ready";
+    //public final String key = "status.delete";
     
+    @Autowired
     private final AmqpTemplate amqpTemplate;
+    
+    @Autowired
+    private TopicExchange topic;
     
     public QueueAdapter (AmqpTemplate amqpTemplate) {
     	this.amqpTemplate = amqpTemplate;
@@ -47,10 +53,10 @@ public class QueueAdapter implements IMessageQueue{
     			return false;
     		}
     		
-    		System.out.println("DEBUG INFO Payload: " + payload);   		
+    		System.out.println("DEBUG INFO Payload: " + payload + "\n Topic-Name: " + topic.getName() + "\nKey: " + key);   		
     	}
     	
-    	amqpTemplate.convertAndSend(QUEUE_NAME, domainEvent.getEvent() + "/" + payload);
+    	amqpTemplate.convertAndSend(topic.getName(), key, domainEvent.getEvent() + "/" + payload);
     	return true;
     }
 }

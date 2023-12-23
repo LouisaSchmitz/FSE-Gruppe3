@@ -14,19 +14,13 @@ import com.example.testing.domain.model.TestCaseTO;
 
 public class EventListener {
 
-	private static final String QUEUE_NAME = "changeStatus";
-
 	private ITestCaseService testCaseService;
 
 	public EventListener (ITestCaseService testCaseService) {
 		this.testCaseService = testCaseService;
 	}
 	
-	//RabbitMQ-Ports
-	//15672
-	//5672
-	
-	@RabbitListener(queues = QUEUE_NAME)
+	@RabbitListener(queues = "#{statusQueue.name}")
 	public void listen(String message) {
 		//System.out.println("DEBUGINFO Nachricht: " + message);
 		 

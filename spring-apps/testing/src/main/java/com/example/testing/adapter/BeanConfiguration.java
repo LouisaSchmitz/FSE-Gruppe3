@@ -1,5 +1,10 @@
 package com.example.testing.adapter;
 
+import org.springframework.amqp.core.AnonymousQueue;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.core.TopicExchange;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -29,4 +34,21 @@ public class BeanConfiguration {
 	 EventListener eventListener(ITestCaseService testCaseService) {
 			return new EventListener(testCaseService);
 	 }
+	 
+	 @Bean
+	 public TopicExchange topic() {
+        return new TopicExchange("change.status");
+	 }
+	 
+     @Bean
+     public Queue statusQueue() {
+         return new AnonymousQueue();
+     }
+     
+     @Bean
+     public Binding bindingStatus(TopicExchange topic, Queue statusQueue) {
+         return BindingBuilder.bind(statusQueue)
+             .to(topic)
+             .with("status.change.ready");
+     }
 }
