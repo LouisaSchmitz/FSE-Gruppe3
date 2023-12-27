@@ -1,10 +1,16 @@
 package com.example.testManagement.adapter;
 
-import org.springframework.amqp.core.AmqpTemplate;
-import org.springframework.amqp.core.Queue;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
+import org.springframework.kafka.core.DefaultKafkaProducerFactory;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.ProducerFactory;
 
 import com.example.testManagement.adapter.database.DBTestCaseRepo;
 import com.example.testManagement.adapter.database.DBUserStoryRepo;
@@ -44,12 +50,36 @@ public class BeanConfiguration {
 	 }
 	 
 	 @Bean
-	 IMessageQueue messageQueue(AmqpTemplate amqpTemplate) {
-		 return new QueueAdapter(amqpTemplate);
+	 IMessageQueue messageQueue(KafkaTemplate<String, String> kafkaTemplate) {
+		 return new QueueAdapter(kafkaTemplate);
 	 }
+	
+	 //Kafka Messaging
+	 /*@Bean
+	 public KafkaAdmin kafkaAdmin() {
+	     Map<String, Object> configs = new HashMap<>();
+	     configs.put(AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9094");
+	     return new KafkaAdmin(configs);
+	 }
+	   
+	 @Bean
+	 public NewTopic topic() {
+	     return new NewTopic("statusChanged", 1, (short) 1);
+	 }*/
 	 
 	 @Bean
-	 public Queue myQueue() {
-		 return new Queue(QueueAdapter.QUEUE_NAME, QueueAdapter.NON_DURABLE);    
+	 public ProducerFactory<String, String> producerFactory() {
+	     Map<String, Object> configProps = new HashMap<>();
+	     
+	     configProps.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9094");
+	     configProps.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+	     configProps.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+	     
+	     return new DefaultKafkaProducerFactory<>(configProps);
+	 }
+
+	 @Bean
+	 public KafkaTemplate<String, String> kafkaTemplate() {
+	    return new KafkaTemplate<>(producerFactory());
 	 }
 }

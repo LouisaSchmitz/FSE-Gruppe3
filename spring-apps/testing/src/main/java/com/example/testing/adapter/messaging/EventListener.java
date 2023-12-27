@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.regex.Pattern;
 
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.kafka.annotation.KafkaListener;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -14,29 +14,23 @@ import com.example.testing.domain.model.TestCaseTO;
 
 public class EventListener {
 
-	private static final String QUEUE_NAME = "changeStatus";
-
 	private ITestCaseService testCaseService;
 
 	public EventListener (ITestCaseService testCaseService) {
 		this.testCaseService = testCaseService;
 	}
 	
-	//RabbitMQ-Ports
-	//15672
-	//5672
-	
-	@RabbitListener(queues = QUEUE_NAME)
+	@KafkaListener(topics = "statusChanged", groupId = "status")
 	public void listen(String message) {
-		//System.out.println("DEBUGINFO Nachricht: " + message);
+		System.out.println("DEBUGINFO Nachricht: " + message);
 		 
-		String parts[] = message.split(Pattern.quote("/"));
+		/*String parts[] = message.split(Pattern.quote("/"));
 		 
 		String event = parts[0];
 		String payload = parts[1];
 		 
 		System.out.println("EVENT: " + event);
-		System.out.println("PAYLOAD: " + payload);
+		System.out.println("PAYLOAD: " + payload);*/
 		 
 //		try {
 //			Thread.sleep(10000);
@@ -45,7 +39,7 @@ public class EventListener {
 //			e1.printStackTrace();
 //		}
 		 
-		if (event.equals("statusChanged")) {
+		/*if (event.equals("statusChanged")) {
 
 			ObjectMapper mapper = new ObjectMapper();
 			TestCaseTO[] testCaseListeTOArray = null;
@@ -62,6 +56,6 @@ public class EventListener {
 			if (!testCaseService.processTestCases(testCaseListeTO))
 				System.out.println("Verarbeitung fehlgeschlagen!"); 
 				
-		 }
+		 }*/
 	 }
 }

@@ -3,7 +3,8 @@ package com.example.testManagement.adapter.messaging;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
 
 import com.example.testManagement.domain.model.TestCase;
 import com.example.testManagement.domain.model.TestCaseTO;
@@ -13,14 +14,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 public class QueueAdapter implements IMessageQueue{
-
-    public static final boolean NON_DURABLE = false;
-    public static final String QUEUE_NAME = "changeStatus";
     
-    private final AmqpTemplate amqpTemplate;
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
     
-    public QueueAdapter (AmqpTemplate amqpTemplate) {
-    	this.amqpTemplate = amqpTemplate;
+    public QueueAdapter (KafkaTemplate<String, String> kafkaTemplate) {
+    	this.kafkaTemplate = kafkaTemplate;
     }
     
     public boolean send(DomainEvent domainEvent) {
@@ -50,7 +49,7 @@ public class QueueAdapter implements IMessageQueue{
     		System.out.println("DEBUG INFO Payload: " + payload);   		
     	}
     	
-    	amqpTemplate.convertAndSend(QUEUE_NAME, domainEvent.getEvent() + "/" + payload);
+    	kafkaTemplate.send(domainEvent.getEvent(), payload);
     	return true;
     }
 }
