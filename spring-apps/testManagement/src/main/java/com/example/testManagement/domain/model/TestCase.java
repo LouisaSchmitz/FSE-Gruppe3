@@ -17,6 +17,9 @@ public class TestCase {
 		this.testDescription = testDescription;
 	}
 	
+	public TestCase() {
+	}
+
 	public TestCaseId getTestCaseId() {
 		return testCaseId;
 	}

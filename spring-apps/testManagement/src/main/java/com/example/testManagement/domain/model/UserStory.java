@@ -26,6 +26,9 @@ public class UserStory {
 		this.testCases = new ArrayList<TestCase>();
 	}
 	
+	public UserStory() {
+	}
+
 	public UserStoryId getUserStoryId() {
 		return userStoryId;
 	}
