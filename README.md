@@ -1,6 +1,6 @@
 # Fortgeschrittene Softwareentwicklung
-![project](https://img.shields.io/badge/Modul-FSE-red)
-![size](https://img.shields.io/github/repo-size/LouisaSchmitz/FSE-Gruppe3?logo=github)
+![project](https://img.shields.io/badge/Modul-FSE-red)  
+![size](https://img.shields.io/github/repo-size/LouisaSchmitz/FSE-Gruppe3?logo=github)  
 ![commit](https://img.shields.io/github/last-commit/LouisaSchmitz/FSE-Gruppe3?logo=git)  
 In dieser Hausarbeit geht es darum, eine Anwendung in einer **Microservice-Architektur** zu implementieren. Jede Gruppe bearbeitet dazu eine eigene Fallstudie.
 
@@ -41,8 +41,19 @@ Ein Vorteil einer DDD-basierten Architektur ist, dass die Fachdomäne (Aggregate
 
 **[⚙️ Source Code](https://github.com/LouisaSchmitz/FSE-Gruppe3/releases/tag/aufgabe-5)**
 
+## Projekt-Setup
+Um die Microservices benutzen und testen zu können, müssen sowohl eine H2-Datenbank als auch zwei Docker-COntainer betrieben werden.
+
 ### SQL-Skript
-Für die korrekte Ausführung der Microservices wird eine H2-Datenbank benötigt. Das SQL-Skript für die Datenbank finden Sie [hier](/sql.txt).
+Für die korrekte Ausführung der Microservices wird eine lokale H2-Datenbank benötigt. Das SQL-Skript zur Erstellung der Datenbank und zum Befüllen mit Testdaten finden Sie **[hier](/setup/sql.txt)**. In der Datei **application.properties** der Microservices muss der Dateipfad zur lokalen Datenbank geändert werden.  
+
+**```spring.datasource.url=jdbc:h2:Link-To-Folder/testManager```**  
+**```spring.datasource.url=jdbc:h2:Link-To-Folder/testing```**
+
+### Docker-Container
+Die Messaging-Dienste können als lokale Docker-Container installiert werden, um die Funktionalität der Microservices zu gewährleisten. Mithilfe der Datei **[docker-compose.yaml](/setup/docker-compose.yml)** können die Docker-Container lokal installiert werden.  
+
+**```docker compose up -d```**  
 
 ## Projekt-Mitglieder
 - [Tobias Piepers](https://github.com/TP1901)
