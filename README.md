@@ -1,6 +1,6 @@
 # Fortgeschrittene Softwareentwicklung
-![project](https://img.shields.io/badge/Modul-FSE-red)  
-![size](https://img.shields.io/github/repo-size/LouisaSchmitz/FSE-Gruppe3?logo=github)  
+![project](https://img.shields.io/badge/Modul-FSE-red)
+![size](https://img.shields.io/github/repo-size/LouisaSchmitz/FSE-Gruppe3?logo=github)
 ![commit](https://img.shields.io/github/last-commit/LouisaSchmitz/FSE-Gruppe3?logo=git)  
 In dieser Hausarbeit geht es darum, eine Anwendung in einer **Microservice-Architektur** zu implementieren. Jede Gruppe bearbeitet dazu eine eigene Fallstudie.
 
