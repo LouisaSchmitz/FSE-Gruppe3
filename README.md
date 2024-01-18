@@ -8,7 +8,7 @@ In dieser Hausarbeit geht es darum, eine Anwendung in einer **Microservice-Archi
 - As a test manager I want to crud user stories for testing.
 - As a test manager I want to crud test cases for user stories.
 - As a test manager I want to set user stories to ‘ready for test’.
-    -Given a user story with at least one test case. When the test manager sets a user story as ‘ready for test’, all test cases attached to user story will be set to ‘ready for test’.
+    - Given a user story with at least one test case. When the test manager sets a user story as ‘ready for test’, all test cases attached to user story will be set to ‘ready for test’.
 - As a tester I want to see test cases in state ‘ready for test’.
 - As a tester I want to log test executions.
 
@@ -24,6 +24,7 @@ Identifizieren Sie mindestens zwei sinnvolle Bounded Contexts (Microservices) f�
 ### 2. Implementierung des Fallbeispiels
 Implementieren Sie einen Ausschnitt der Fallstudie mit Spring Boot. Wählen Sie den Ausschnitt so, dass es sinnvoll ist, zwei Microservices zu entwickeln, die asynchron miteinander kommunizieren. Die Implementierung muss keine Benutzerschnittstelle enthalten, es genügt, wenn die Funktionalität über REST-Endpoints verfügbar ist.  
 
+**[📝 PDF-Dokument](/pdf/Package-Struktur.pdf)**  
 **[⚙️ Source Code](https://github.com/LouisaSchmitz/FSE-Gruppe3/releases/tag/aufgabe-2)**
 
 ### 3. Implementierung des Publish/Subscribe-Prinzips
@@ -34,11 +35,13 @@ Das Veranstaltungsbeispiel zeigt eine asynchrone Kommunikation per Broadcast. Im
 ### 4. Implementierung der Kommunikation mit Kafka
 Spring Boot unterstützt neben RabbitMQ auch Kafka für die asynchrone Kommunikation. Implementieren Sie für Ihre Anwendung die asynchrone Kommunikation mit Kafka.  
 
+**[📝 PDF-Dokument](/pdf/LiteraturanalyseKafkaRabbitMQ.pdf)**  
 **[⚙️ Source Code](https://github.com/LouisaSchmitz/FSE-Gruppe3/releases/tag/aufgabe-4)**
 
 ### 5. Implementierung von Tests
 Ein Vorteil einer DDD-basierten Architektur ist, dass die Fachdomäne (Aggregates + Entities + Value Object + Domain Services) separat getestet werden kann. Implementieren Sie solche Tests als automatisierte Tests für die Fachdomäne.  
 
+**[📝 PDF-Dokument](/pdf/Automatische_Tests.pdf)**  
 **[⚙️ Source Code](https://github.com/LouisaSchmitz/FSE-Gruppe3/releases/tag/aufgabe-5)**
 
 ## Projekt-Setup
