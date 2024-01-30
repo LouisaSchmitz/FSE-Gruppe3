@@ -26,29 +26,33 @@ public class QueueAdapter implements IMessageQueue{
     	
     	String payload = "";
     	
+    	//Überprüfung, ob es sich um das Event der Status-Änderung handelt
     	if (domainEvent.getEvent().equalsIgnoreCase("statusChanged")) {
     		
+    		//Objekt des Events zu einem UserStory-Objekt transformieren
     		UserStory userStory = (UserStory)domainEvent.getObject();
     		Collection<TestCaseTO> testCaseList = new ArrayList<TestCaseTO>();
     		
+    		//Iteration über alle TestCases
     		for (TestCase testCase : userStory.getAllTestCases())
     			testCaseList.add(new TestCaseTO(testCase));
     		
     		ObjectMapper objectMapper = new ObjectMapper();
     		 
+    		//Payload-String wird als JSON-String zusammengesetzt
     		try {
     			payload = objectMapper.writeValueAsString(testCaseList);  		
     		} catch (JsonProcessingException e) {
-    			// TODO Auto-generated catch block
-    			// die folgende Meldung gehört eigentlich in ein Log
     			System.out.println("Interner Fehler");
     			e.printStackTrace();
     			return false;
     		}
     		
+    		//Debug-Info in der Konsole wird ausgegeben
     		System.out.println("DEBUG INFO Payload: " + payload);   		
     	}
     	
+    	//Das Event wird mit Kafka versendet
     	kafkaTemplate.send(domainEvent.getEvent(), payload);
     	return true;
     }

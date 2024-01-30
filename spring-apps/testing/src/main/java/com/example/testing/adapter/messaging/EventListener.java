@@ -13,27 +13,24 @@ import com.example.testing.domain.model.TestCaseTO;
 
 public class EventListener {
 
+	//Definition der benötigten Interfaces
 	private ITestCaseService testCaseService;
 
 	public EventListener (ITestCaseService testCaseService) {
 		this.testCaseService = testCaseService;
 	}
 	
+	//Warten auf eine Nachricht mit dem Thema "stausChanged"
 	@KafkaListener(topics = "statusChanged", groupId = "status")
 	public void listen(String message) {
 		System.out.println("DEBUGINFO Nachricht: " + message);
-		 
-//		try {
-//			Thread.sleep(10000);
-//		} catch (InterruptedException e1) {
-//			// TODO Auto-generated catch block
-//			e1.printStackTrace();
-//		}
 
+		//Initialisierung eines ObjectMappers um JSON in Java zu konvertieren
 		ObjectMapper mapper = new ObjectMapper();
 		TestCaseTO[] testCaseListeTOArray = null;
 		
 		try {
+			//Konvertierung des Payloads in Java
 			testCaseListeTOArray = mapper.readValue(message, TestCaseTO[].class);
 		} catch (JsonProcessingException e) {
 			System.out.println("Interner Fehler bei der Eventverarbeitung");
@@ -42,6 +39,7 @@ public class EventListener {
 		
 		Collection<TestCaseTO> testCaseListeTO = Arrays.asList(testCaseListeTOArray);
 		
+		//Verarbeitung des TestCases vom TestCsseService
 		if (!testCaseService.processTestCases(testCaseListeTO))
 			System.out.println("Verarbeitung fehlgeschlagen!"); 
 	 }
