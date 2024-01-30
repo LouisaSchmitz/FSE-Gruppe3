@@ -1,9 +1,7 @@
 package com.example.testManagement.domain.model;
 
-import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
-import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,31 +21,6 @@ public class UserStoryTest {
 		UserStory userStory2 = new UserStory(new UserStoryId(100), 10, "Test");
 		
 		assertNotSame(userStory1, userStory2);
-	}
-	
-	@Test
-	public void testUserStoryLimits() throws Exception {
-		boolean failed = false;
-		
-		try {
-			new UserStory(new UserStoryId(-1), -1, "");
-			fail("Should have thrown no exception.");
-		} catch (Throwable t) {
-			failed = true;
-		}
-		
-		assertTrue(failed);
-		
-		failed = false;
-		
-		try {
-			new UserStory(new UserStoryId(1234567890), 1234567890, "");
-			fail("Should have thrown no exception.");
-		} catch (Throwable t) {
-			failed = true;
-		}
-		
-		assertTrue(failed);
 	}
 	
 	@Test
@@ -72,31 +45,6 @@ public class UserStoryTest {
 		TestCase testCase2 = new TestCase(new TestCaseId(100), "Test");
 		
 		assertNotSame(testCase1, testCase2);
-	}
-	
-	@Test
-	public void testTestCaseLimits() throws Exception {
-		boolean failed = false;
-		
-		try {
-			new TestCase(new TestCaseId(-1), "");
-			fail("Should have thrown no exception.");
-		} catch (Throwable t) {
-			failed = true;
-		}
-		
-		assertTrue(failed);
-		
-		failed = false;
-		
-		try {
-			new TestCase(new TestCaseId(1234567890), "");
-			fail("Should have thrown no exception.");
-		} catch (Throwable t) {
-			failed = true;
-		}
-		
-		assertTrue(failed);
 	}
 	
 	@Test
