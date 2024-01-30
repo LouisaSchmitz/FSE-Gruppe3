@@ -17,27 +17,36 @@ public class DBTestCaseRepo implements ITestCaseRepo {
 	
 	private final JDBCTestCaseEntityRepo jdbcTestCaseEntityRepo;
 	
+	//Konstruktor für Injektion des JDBCRepos über Autowiring
 	@Autowired
 	public DBTestCaseRepo(JDBCTestCaseEntityRepo jdbcTestCaseEntityRepo) {
 		this.jdbcTestCaseEntityRepo = jdbcTestCaseEntityRepo;
 	}
 
+	//Abruf eines TestCases anhand der ID
 	@Override
 	public TestCase findById(TestCaseId testCaseId) {
+		//Versuch die Entity anhand der ID in der Datenbank zu finden
 		Optional<TestCaseEntity> testCaseEntity = jdbcTestCaseEntityRepo.findById(testCaseId.getId());
-        if (testCaseEntity.isPresent()) {
+        
+		//Überprüfung ob Entity vorhanden ist
+		if (testCaseEntity.isPresent()) {
             return testCaseEntity.get().toDomain();
         } else {
+        	//Leere Rückgabe, wenn es keine TestCase-Entität gibt
             return null;
         }
 	}
 
+	//Abruf eines TestCAses anhand der UserStory-ID
 	@Override
 	public Collection<TestCase> findByUserStoryId(UserStoryId userStoryId) {
 		Collection<TestCase> testCases = new ArrayList<TestCase>();
 		
+		//Abruf aller TestCases
 		Iterable<TestCaseEntity> testCasesEntity = jdbcTestCaseEntityRepo.findAll();
 		
+		//Iteration über alle TestCases und Überprüfung ob die UserSTory-ID übereinstimmt
 		for (TestCaseEntity item : testCasesEntity) {
 			if(item.getStoryId() == userStoryId.getId())
 				testCases.add(item.toDomain());
@@ -46,8 +55,10 @@ public class DBTestCaseRepo implements ITestCaseRepo {
 		return testCases;
 	}
 
+	//Speicherung des TestCases in der Datenbank
 	@Override
 	public void save(TestCase testCase, int storyId) {
+		//Umwandlung des TestCases in eine Entity, um diese abspeichern zu können
 		jdbcTestCaseEntityRepo.save(new TestCaseEntity(testCase, storyId));
 	}
 }
